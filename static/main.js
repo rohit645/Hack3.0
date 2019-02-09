@@ -4,6 +4,6 @@ function setup() {
 }
 
 function draw() {
-    socket.emit('msg', 'helloworld');
+    socket.emit('msg', 'helloWorld');
     background(0);
 }
