@@ -17,7 +17,11 @@ def skrible():
 @socketio.on("draw")
 def recvmsg(JSON):
     emit('click', JSON, broadcast = True)
-    print("debug")
+    # print("debug")
+
+@socketio.on("msg")
+def chatting(msg):
+    emit('chatting', msg, broadcast = True)
 
 if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0")
