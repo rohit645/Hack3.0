@@ -5,6 +5,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
+users = []
+
 @app.route("/")
 def homepage():
     return render_template("homepage.html")
@@ -17,11 +19,17 @@ def skrible():
 @socketio.on("draw")
 def recvmsg(JSON):
     emit('click', JSON, broadcast = True)
-    # print("debug")
+
+@socketio.on("newuser")
+def newuser(username):
+    global users
+    users += [username]
+    emit("onlineusers", users, broadcast = True)
+    print("debug", users)
 
 @socketio.on("msg")
 def chatting(msg):
     emit('chatting', msg, broadcast = True)
 
 if __name__ == '__main__':
-    socketio.run(app, host="0.0.0.0")
+    socketio.run(app, host="0.0.0.0", debug=True)

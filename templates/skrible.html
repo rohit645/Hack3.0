@@ -14,25 +14,38 @@
     <script src="/static/skrible.js"></script>
 </head>
 <body>
-    <div id="titleBar">
-        <h1>Skrible</h1>
-    </div>
-    <div id="main">
-        <div id="content">
-            <h2>content</h2>
-            <div id = "container"></div>
+    <div class="grid-container">
+        <div class="TITLE">
+            <h1>
+                <font color="red">Game</font>CENTRE
+            </h1>
         </div>
-        <div id="rightnav">
-            <h2> Online</h2>
-            <a href="#">lakshay</a>
-            <a href="#">rohit</a>
-            <a href="#">kartikay</a>
-            <a href="#">chirag</a>
-            <div id="chatBox">
+        <div class="GAME">
+            <div class="GAME-INNER">
+                <div id="container"></div>
             </div>
-            <input type="text" id="chat">
-
-
+        </div>
+        <div class="CHAT">
+            <div class="box box-title">
+                <h3>CHAT</h3>
+            </div>
+            <div id="chatbox">
+                
+            </div>
+            <div class="bottom-box">
+                <input type="text" id="word">
+            </div>
+        </div>
+        <div class="MENU"></div>
+        <div class="FOOTER"></div>
+        <div id="modal-background"></div>
+        <div id="modal-content">
+            <br><br><br>
+            <center>
+                <h3 style="text-shadow: 0px 0px 11px red;">Enter Your Name:</h3>
+                <br>
+                <input type="text" id="username">
+            </center>
         </div>
     </div>
 </body>
