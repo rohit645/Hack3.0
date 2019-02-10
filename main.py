@@ -46,11 +46,11 @@ def disc(userid):
     emit("onlineusers", users, broadcast=True)
 
 def backgroundThread():
-    activeuser = 0
+    activeuser = 1
     while True:
-        activeuser += 1
+        activeuser += 0
         socketio.emit("activeuser", activeuser, broadcast=True)
-        socketio.sleep(1)
+        socketio.sleep(10)
 
 @socketio.on('connect')
 def connect():

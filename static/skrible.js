@@ -13,7 +13,8 @@ let sketch = function(p){
         socket.on('click', p.drawData);
         socket.on('onlineusers', p.refreshUsers);
         socket.on('chatting', p.showmessage);
-        socket.on('activeuser', console.log);
+        socket.on('activeuser', p.changeActiveUser);  
+
     }
 
     p.drawData = function (JSON) {
@@ -34,12 +35,12 @@ let sketch = function(p){
     }
 
     p.refreshUsers = function (users){
-        var userbox = "<div class=\"box\"><h3>username</h3></div >";
+        var userbox = "<div class=\"box\" id=\"uid\"><h3>username</h3></div >";
         $("#usersbox").empty();
         allusers = users;
         for (const uid in users) {
             const element = users[uid];
-            $("#usersbox").append(userbox.replace("username", element));
+            $("#usersbox").append(userbox.replace("username", element).replace("uid", "uid" + uid));
             console.log(element);
         }
     }
@@ -50,7 +51,10 @@ let sketch = function(p){
         text = text.replace('usr',allusers[msg.uid]).replace('msg',msg.message);
         $("#messages").append(text);
     }
-
+    p.changeActiveUser = function(auid) {
+        activeUser = auid;
+        $("#uid" + auid).addClass('active');
+    }
 }
 
 function chat(e) {

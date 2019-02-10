@@ -102,6 +102,11 @@ h1 {
     background: #050505;
 }
 
+.active {
+	box-shadow: 1px 1px green;
+	text-shadow: 2px 2px 15px green;
+}
+
 .FOOTER {
 	grid-area: FOOTER;
 	box-shadow: 2px 2px 10px 1px black;
