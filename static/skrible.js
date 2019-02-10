@@ -81,6 +81,8 @@ function enterUser(e){
     }
 }
 
+lastmessage = 0;
+
 $(function(){
     $("#modal-background").show();
     $("#modal-content").show();
@@ -90,4 +92,8 @@ $(function(){
     window.onbeforeunload = function () {
         socket.emit("disconnecting", userid);
     }
+    setInterval(() => {
+        $(".messagebox").each( function(x,y) {if(x < lastmessage) $(y).fadeOut(5000);});
+        lastmessage += 1;
+    }, 5000);
 });
