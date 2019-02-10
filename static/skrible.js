@@ -1,6 +1,7 @@
 let gameStarted = false;
 let userid = 0;
 let allusers = undefined;
+let activeUser = 0;
 
 let sketch = function(p){
 
@@ -12,6 +13,7 @@ let sketch = function(p){
         socket.on('click', p.drawData);
         socket.on('onlineusers', p.refreshUsers);
         socket.on('chatting', p.showmessage);
+        socket.on('activeuser', console.log);
     }
 
     p.drawData = function (JSON) {
@@ -22,7 +24,7 @@ let sketch = function(p){
     }
 
     p.draw = function() {
-        if (p.mouseIsPressed && gameStarted) {
+        if (p.mouseIsPressed && gameStarted && activeUser == userid) {
             p.stroke(255, 0, 0);
             p.fill(255, 0, 0);
             p.circle(p.mouseX, p.mouseY, 2);
