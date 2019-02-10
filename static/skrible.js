@@ -2,7 +2,7 @@ let sketch = function(p){
 
     p.setup = function() {
         socket = io.connect('http://' + document.domain + ':' + location.port);
-        p.createCanvas(640, 480);
+        p.createCanvas(640, 450);
         p.background(230);
         p.strokeWeight(2);
         $("#chat").bind("keypress", {}, chat);
