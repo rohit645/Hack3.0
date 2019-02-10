@@ -45,19 +45,26 @@ def disc(userid):
     users.pop(userid)
     emit("onlineusers", users, broadcast=True)
 
-def backgroundThread():
-    activeuser = 1
+def backgroundThread(users):
+    activeuser = 0
     while True:
-        socketio.emit("activeuser", activeuser + 1, broadcast=True)
-        socketio.sleep(20)
-        activeuser = (activeuser + 1) % 3
-
+        if (len(users) == 0):
+            socketio.sleep(10)
+        else:
+            dic = dict(users)
+            print(dic)
+            for uid in dic:
+                print(uid)
+                socketio.emit("activeuser", uid, broadcast=True)
+                socketio.sleep(20)       
+        
 @socketio.on('connect')
 def connect():
     global thread
+    global users
     with thread_lock:
         if thread is None:
-            thread = socketio.start_background_task(backgroundThread)
+            thread = socketio.start_background_task(backgroundThread, users)
 
 if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", debug=True)

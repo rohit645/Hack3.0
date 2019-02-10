@@ -14,6 +14,7 @@ let sketch = function(p){
         socket.on('onlineusers', p.refreshUsers);
         socket.on('chatting', p.showmessage);
         socket.on('activeuser', p.changeActiveUser);  
+        socket.on('user', p.cout);
 
     }
 
@@ -53,8 +54,15 @@ let sketch = function(p){
     }
     p.changeActiveUser = function(auid) {
         activeUser = auid;
-        $("#usersbox>.box").each( function(x,y){ $(y).removeClass('active'); });
+        $("#usersbox>.box").each( function(x,y){ $(y).removeClass('active');});
         $("#uid" + auid).addClass('active');
+        p.background(255);
+    }
+
+    p.cout = function(us) {
+        for (const uid in us) {
+            console.log(element);
+        }
     }
 }
 
