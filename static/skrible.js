@@ -1,4 +1,6 @@
 let gameStarted = false;
+let userid = 0;
+let allusers = undefined;
 
 let sketch = function(p){
 
@@ -9,6 +11,7 @@ let sketch = function(p){
         p.strokeWeight(2);
         socket.on('click', p.drawData);
         socket.on('onlineusers', p.refreshUsers);
+        socket.on('chatting', p.showmessage);
     }
 
     p.drawData = function (JSON) {
@@ -31,9 +34,16 @@ let sketch = function(p){
     p.refreshUsers = function (users){
         var userbox = "<div class=\"box\"><h3>username</h3></div >";
         $("#chatbox").empty();
-        users.forEach(element => {
+        allusers = users;
+        for (const uid in users) {
+            const element = users[uid];
             $("#chatbox").append(userbox.replace("username", element));
-        });
+            console.log(element);
+        }
+    }
+
+    p.showmessage = function (msg){
+        console.log(msg);
     }
 
 }
@@ -42,7 +52,7 @@ function chat(e) {
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code == 13) {
         var v = $("#chat").val();
-        socket.emit('msg', v);
+        socket.emit('msg', {'uid': userid, 'message': v});
         $("#chat").val('');
     }
 }
@@ -51,7 +61,9 @@ function enterUser(e){
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code == 13) {
         var v = $("#username").val();
-        socket.emit('newuser', v);
+        socket.emit('newuser', v, function (uid){
+            console.log("userid:", uid); userid = uid;
+        });
         $("#modal-background").hide();
         $("#modal-content").hide();
         gameStarted = true;
@@ -61,7 +73,13 @@ function enterUser(e){
 $(function(){
     $("#modal-background").show();
     $("#modal-content").show();
-    $("#username").bind("keypress", {}, enterUser);
+    $("#username").focus().bind("keypress", {}, enterUser);
     $("#chat").bind("keypress", {}, chat);
     new p5(sketch, 'container');
+    setInterval(function () {
+        socket.emit("alive", userid);
+    }, 1000);
+    window.onbeforeunload = function () {
+        socket.emit("disconnecting", userid);
+    }
 });
