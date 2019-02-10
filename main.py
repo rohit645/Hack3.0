@@ -1,5 +1,9 @@
 from flask import *
 from flask_socketio import *
+from threading import Lock
+
+thread = None
+thread_lock = Lock()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -40,6 +44,20 @@ def chatting(msg):
 def disc(userid):
     users.pop(userid)
     emit("onlineusers", users, broadcast=True)
+
+def backgroundThread():
+    activeuser = 0
+    while True:
+        activeuser += 1
+        socketio.emit("activeuser", activeuser, broadcast=True)
+        socketio.sleep(1)
+
+@socketio.on('connect')
+def connect():
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(backgroundThread)
 
 if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", debug=True)
