@@ -103,8 +103,9 @@ h1 {
 }
 
 .active {
-	box-shadow: 1px 1px green;
+	box-shadow: 3px 3px green;
 	text-shadow: 2px 2px 15px green;
+	color: #0f0;
 }
 
 .FOOTER {

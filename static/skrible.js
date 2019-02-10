@@ -53,6 +53,7 @@ let sketch = function(p){
     }
     p.changeActiveUser = function(auid) {
         activeUser = auid;
+        $("#usersbox>.box").each( function(x,y){ $(y).removeClass('active'); });
         $("#uid" + auid).addClass('active');
     }
 }

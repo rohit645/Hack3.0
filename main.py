@@ -48,9 +48,9 @@ def disc(userid):
 def backgroundThread():
     activeuser = 1
     while True:
-        activeuser += 0
-        socketio.emit("activeuser", activeuser, broadcast=True)
-        socketio.sleep(10)
+        socketio.emit("activeuser", activeuser + 1, broadcast=True)
+        socketio.sleep(20)
+        activeuser = (activeuser + 1) % 3
 
 @socketio.on('connect')
 def connect():
