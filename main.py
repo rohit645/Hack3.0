@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-users = []
+users = {}
 
 @app.route("/")
 def homepage():
@@ -20,16 +20,26 @@ def skrible():
 def recvmsg(JSON):
     emit('click', JSON, broadcast = True)
 
+uid_max = 0
+
 @socketio.on("newuser")
 def newuser(username):
-    global users
-    users += [username]
-    emit("onlineusers", users, broadcast = True)
-    print("debug", users)
+    global users, uid_max
+    uid_max += 1
+    users[uid_max] = username
+    emit("onlineusers", users, broadcast=True)
+    print("debug:",users)
+    return uid_max
 
 @socketio.on("msg")
 def chatting(msg):
     emit('chatting', msg, broadcast = True)
+
+
+@socketio.on("disconnecting")
+def disc(userid):
+    users.pop(userid)
+    emit("onlineusers", users, broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", debug=True)
