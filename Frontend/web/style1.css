@@ -1,3 +1,7 @@
+
+
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+
 *
 {
 	margin:0;
@@ -8,6 +12,7 @@ body{
 	background-image:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)) ,url(glass.jpg);
 	background-position:center;
 	font-family:monospace;
+	background-size: cover;
 }
 
 .main-nav{
@@ -200,7 +205,30 @@ box-shadow: 5px 5px 15px 5px #000000;
 	
 }
 
+.login-box{
+	width: 280px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	color:white;
 
+}
+.login-box h1{
+	
+	font-size:40px;
+	border-bottom: 6px solid rgb(109, 141, 131);
+	margin-bottom: 50px;
+	padding:13px 0;
+}
 
+.textbox{
+	width: 100%;
+	overflow: hidden;
+	font-size: 20px;
+	padding: 8px 0
+	margin: 8px 0;
+	border-bottom: 1px solid  rgb(109, 141, 131);
+}
 
 
