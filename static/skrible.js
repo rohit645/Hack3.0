@@ -33,17 +33,20 @@ let sketch = function(p){
 
     p.refreshUsers = function (users){
         var userbox = "<div class=\"box\"><h3>username</h3></div >";
-        $("#chatbox").empty();
+        $("#usersbox").empty();
         allusers = users;
         for (const uid in users) {
             const element = users[uid];
-            $("#chatbox").append(userbox.replace("username", element));
+            $("#usersbox").append(userbox.replace("username", element));
             console.log(element);
         }
     }
 
     p.showmessage = function (msg){
         console.log(msg);
+        var text = '<div class="messagebox"><span class="uname">usr:</span><span class="message">msg</span></div>'
+        text = text.replace('usr',allusers[msg.uid]).replace('msg',msg.message);
+        $("#messages").append(text);
     }
 
 }
@@ -66,6 +69,7 @@ function enterUser(e){
         });
         $("#modal-background").hide();
         $("#modal-content").hide();
+        $("#chat").focus();
         gameStarted = true;
     }
 }
@@ -76,9 +80,6 @@ $(function(){
     $("#username").focus().bind("keypress", {}, enterUser);
     $("#chat").bind("keypress", {}, chat);
     new p5(sketch, 'container');
-    setInterval(function () {
-        socket.emit("alive", userid);
-    }, 1000);
     window.onbeforeunload = function () {
         socket.emit("disconnecting", userid);
     }
